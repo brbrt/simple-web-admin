@@ -8,6 +8,7 @@ module.exports = {
 };
 
 var commands = [
+    { name: 'diskspace', description: 'Return disk space usage data.'},
     { name: 'sample', description: 'Sample command'},
     { name: 'syslog', description: 'Returns the lass 100 lines of syslog'},
     { name: 'uptime', description: 'Runs the uptime command.'}
