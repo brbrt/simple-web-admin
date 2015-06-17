@@ -1,0 +1,12 @@
+Available commands:
+
+<ul>
+{{#each commands}}
+    <li>
+        <form action="command/{{this.name}}" method="post">
+            <input type="submit" value="{{this.name}}">
+            <small>{{this.description}}</small>
+        </form>
+    </li>
+{{/each}}
+</ul>
