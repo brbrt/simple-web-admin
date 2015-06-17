@@ -4,10 +4,11 @@ var spawn = require('child_process').spawn;
 
 module.exports = run;
 
-function run(script, args) {
-    args = args || [];
+function run(data) {
+    script = data.script;
+    args = data.args || [];
 
-	log.debug('Running script=' + script + ' with args=' + JSON.stringify(args));
+	log.info('Running script=' + script + ' with args=' + JSON.stringify(args));
 
 	var deferred = q.defer();
 

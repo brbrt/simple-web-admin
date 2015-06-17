@@ -1,3 +1,4 @@
+var bodyParser = require("body-parser");
 var express = require('express');
 var expressHbs = require('express-handlebars');
 var log = require('winston');
@@ -7,6 +8,7 @@ var app = express();
 
 app.engine('hbs', expressHbs({extname:'hbs', defaultLayout:'main.hbs'}));
 app.set('view engine', 'hbs');
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', function(req, res){
     var data = {commands: commands.getAll()};
@@ -19,7 +21,7 @@ app.get('/command', function (req, resp) {
 
 app.post('/command/:name', function (req, resp) {
     commands
-        .execute(req.params.name)
+        .execute(req.params.name, req.body)
         .then(function success(output) {
             resp.header('Content-Type', 'text/plain');
             resp.send(output);

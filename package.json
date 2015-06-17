@@ -13,6 +13,7 @@
     "winston": "^1.0.0"
   },
   "dependencies": {
+    "body-parser": "^1.13.1",
     "express": "^4.12.4",
     "express-handlebars": "^2.0.1",
     "q": "^1.4.1"

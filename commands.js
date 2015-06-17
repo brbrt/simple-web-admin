@@ -8,37 +8,55 @@ module.exports = {
 };
 
 var commands = [
-    { name: 'diskspace', description: 'Return disk space usage data.'},
-    { name: 'sample', description: 'Sample command'},
-    { name: 'syslog', description: 'Returns the lass 100 lines of syslog'},
-    { name: 'uptime', description: 'Runs the uptime command.'}
+    { name: 'diskspace', description: 'Return disk space usage data.' },
+    { name: 'syslog', description: 'Returns the last 100 lines of syslog' },
+    { name: 'startservice', description: 'Starts the specified service.', args: ['name'] },
+    { name: 'stopservice', description: 'Stops the specified service.', args: ['name'] },
+    { name: 'uptime', description: 'Runs the uptime command.' }
 ];
 
 function getAll() {
     return commands;
 }
 
-function execute(name) {
-    log.info('Executing command: ' + name);
+function execute(name, params) {
+    var data = {name: name, params: params};
+    log.info('Executing command: ' + require('util').inspect(data));
 
-    return getCommand(name)
+    return getCommand(data)
         .then(extractScriptName)
+        .then(processArguments)
         .then(scriptrunner)
         .then(logSuccess, logError);
 }
 
-function getCommand(name) {
+function getCommand(data) {
     for (var i = 0; i < commands.length; i++) {
-        if (commands[i].name === name) {
-            return q(commands[i]);
+        if (commands[i].name === data.name) {
+            data.command = commands[i];
+            return q(data);
         }
     }
 
     return q.reject('No command with the specified name!');
 }
 
-function extractScriptName(command) {
-    return 'scripts/' + command.name + '.sh';
+function extractScriptName(data) {
+    data.script = 'scripts/' + data.command.name + '.sh';
+    return q(data);
+}
+
+function processArguments(data) {
+    var args = [];
+
+    for (var key in data.params) {
+        // TODO: validate
+        args.push(data.params[key]);
+    }
+
+    data.args = args;
+
+    return q(data);
 }
 
 function logSuccess(result) {

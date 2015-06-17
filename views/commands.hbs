@@ -3,9 +3,13 @@ Available commands:
 <ul>
 {{#each commands}}
     <li>
-        <form action="command/{{this.name}}" method="post">
-            <input type="submit" value="{{this.name}}">
+        <form action="command/{{name}}" method="post">
+            <input type="submit" value="{{name}}">
             <small>{{this.description}}</small>
+
+            {{#each args}}
+                <input type="text" name="{{@index}}" placeholder="{{../name}}">
+            {{/each}}
         </form>
     </li>
 {{/each}}
