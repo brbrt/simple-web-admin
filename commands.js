@@ -9,10 +9,11 @@ module.exports = {
 };
 
 var commands = [
-    { name: 'diskspace', description: 'Return disk space usage data.' },
-    { name: 'syslog', description: 'Returns the last 100 lines of syslog' },
+    { name: 'diskspace', description: 'Returns disk space usage data.' },
+    { name: 'list_incomplete_torrents', description: 'Lists incomplete torrents.' },
     { name: 'startservice', description: 'Starts the specified service.', args: ['name'] },
     { name: 'stopservice', description: 'Stops the specified service.', args: ['name'] },
+    { name: 'syslog', description: 'Returns the last 100 lines of syslog' },
     { name: 'uptime', description: 'Runs the uptime command.' }
 ];
 
