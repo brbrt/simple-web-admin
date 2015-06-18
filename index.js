@@ -1,14 +1,16 @@
 var bodyParser = require("body-parser");
 var express = require('express');
 var expressHbs = require('express-handlebars');
+var path = require('path');
 var log = require('winston');
 var commands = require('./commands.js');
 
 var app = express();
 
-app.engine('hbs', expressHbs({extname:'hbs', defaultLayout:'main.hbs'}));
+app.set('views', path.resolve(__dirname + '/views'));
 app.set('view engine', 'hbs');
-app.use(bodyParser.urlencoded({ extended: true }));
+app.engine('hbs', expressHbs({extname:'hbs', defaultLayout:'index.hbs', layoutsDir:app.get('views')}));
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.get('/', function(req, res){
     var data = {commands: commands.getAll()};

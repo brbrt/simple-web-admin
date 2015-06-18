@@ -1,4 +1,5 @@
 var log = require('winston');
+var path = require('path');
 var q = require('q');
 var scriptrunner = require('./scriptrunner.js');
 
@@ -42,7 +43,7 @@ function getCommand(data) {
 }
 
 function extractScriptName(data) {
-    data.script = 'scripts/' + data.command.name + '.sh';
+    data.script = path.resolve(__dirname, 'scripts/', data.command.name + '.sh');
     return q(data);
 }
 
