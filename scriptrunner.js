@@ -8,7 +8,7 @@ function run(data) {
     script = data.script;
     args = data.args || [];
 
-	log.info('Running script=' + script + ' with args=' + JSON.stringify(args));
+	log.debug('Running script=' + script + ' with args=' + JSON.stringify(args));
 
 	var deferred = q.defer();
 

@@ -1,8 +1,10 @@
-var bodyParser = require("body-parser");
+var bodyParser = require('body-parser');
 var express = require('express');
 var expressHbs = require('express-handlebars');
 var path = require('path');
 var log = require('winston');
+
+var config = require('./config.js');
 var commands = require('./commands.js');
 
 var app = express();
@@ -35,7 +37,7 @@ app.post('/command/:name', function (req, resp) {
         });
 });
 
-var server = app.listen(12121, function () {
+var server = app.listen(config('port'), function () {
   var host = server.address().address;
   var port = server.address().port;
 

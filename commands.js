@@ -61,7 +61,7 @@ function processArguments(data) {
 }
 
 function logSuccess(result) {
-    log.info('Successfully executed command: ' + result);
+    log.debug('Successfully executed command: ' + result);
     return result;
 }
 
