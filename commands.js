@@ -10,6 +10,7 @@ module.exports = {
 
 var commands = [
     { name: 'diskspace', description: 'Returns disk space usage data.' },
+    { name: 'is_proc_running', description: 'Checks if the specified process is running.', args: ['name'] },
     { name: 'list_incomplete_torrents', description: 'Lists incomplete torrents.' },
     { name: 'startservice', description: 'Starts the specified service.', args: ['name'] },
     { name: 'stopservice', description: 'Stops the specified service.', args: ['name'] },
