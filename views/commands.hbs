@@ -8,7 +8,7 @@ Available commands:
             <small>{{this.description}}</small>
 
             {{#each args}}
-                <input type="text" name="{{@index}}" placeholder="{{../name}}">
+                <input type="text" name="{{this}}" placeholder="{{../name}}">
             {{/each}}
         </form>
     </li>

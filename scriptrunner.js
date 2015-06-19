@@ -4,15 +4,12 @@ var spawn = require('child_process').spawn;
 
 module.exports = run;
 
-function run(data) {
-    script = data.script;
-    args = data.args || [];
-
-	log.debug('Running script=' + script + ' with args=' + JSON.stringify(args));
+function run(script) {
+	log.debug('Running script=' + script);
 
 	var deferred = q.defer();
 
-	var proc = spawn(script, args);
+	var proc = spawn('sh', ['-c', script]);
 
 	var out = '', err = '';
 

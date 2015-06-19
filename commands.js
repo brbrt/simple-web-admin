@@ -1,3 +1,4 @@
+var handlebars = require('handlebars');
 var log = require('winston');
 var path = require('path');
 var q = require('q');
@@ -9,13 +10,50 @@ module.exports = {
 };
 
 var commands = [
-    { name: 'diskspace', description: 'Returns disk space usage data.' },
-    { name: 'is_proc_running', description: 'Checks if the specified process is running.', args: ['name'] },
-    { name: 'list_incomplete_torrents', description: 'Lists incomplete torrents.' },
-    { name: 'startservice', description: 'Starts the specified service.', args: ['name'] },
-    { name: 'stopservice', description: 'Stops the specified service.', args: ['name'] },
-    { name: 'syslog', description: 'Returns the last 100 lines of syslog' },
-    { name: 'uptime', description: 'Runs the uptime command.' }
+   {
+      name:'diskspace',
+      description:'Returns disk space usage data.',
+      script: 'df -h'
+   },
+   {
+      name:'is_proc_running',
+      description:'Checks if the specified process is running.',
+      script: 'ps aux | grep {{name}}',
+      args:[
+         'name'
+      ]
+   },
+   {
+      name:'list_incomplete_torrents',
+      description:'Lists incomplete torrents.',
+      script: 'ls -l /data/shared/temp/rtorrent/incomplete/'
+   },
+   {
+      name:'startservice',
+      description:'Starts the specified service.',
+      script: 'service {{name}} start',
+      args:[
+         'name'
+      ]
+   },
+   {
+      name:'stopservice',
+      description:'Stops the specified service.',
+      script: 'service {{name}} stop',
+      args:[
+         'name'
+      ]
+   },
+   {
+      name:'syslog',
+      description:'Returns the last 100 lines of syslog',
+      script: 'tail -n 100 /var/log/syslog | tac'
+   },
+   {
+      name:'uptime',
+      description:'Runs the uptime command.',
+      script: 'uptime'
+   }
 ];
 
 function getAll() {
@@ -27,7 +65,7 @@ function execute(name, params) {
     log.info('Executing command: ' + require('util').inspect(data));
 
     return getCommand(data)
-        .then(extractScriptName)
+        // .then(extractScriptName)
         .then(processArguments)
         .then(scriptrunner)
         .then(logSuccess, logError);
@@ -50,16 +88,13 @@ function extractScriptName(data) {
 }
 
 function processArguments(data) {
-    var args = [];
-
     for (var key in data.params) {
         // TODO: validate
-        args.push(data.params[key]);
     }
 
-    data.args = args;
+    var template = handlebars.compile(data.command.script);
 
-    return q(data);
+    return template(data.params);
 }
 
 function logSuccess(result) {
