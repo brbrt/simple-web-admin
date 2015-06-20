@@ -1,6 +1,5 @@
 var handlebars = require('handlebars');
 var log = require('winston');
-var path = require('path');
 var q = require('q');
 var requireall = require('require-all');
 var scriptrunner = require('./scriptrunner.js');
@@ -11,7 +10,7 @@ module.exports = {
 };
 
 var commands = requireall(__dirname + '/commands');
-log.debug('All commands:' + require('util').inspect(commands));
+log.debug('All commands: ' + require('util').inspect(commands));
 
 function getAll() {
     return commands;

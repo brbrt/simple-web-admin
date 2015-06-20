@@ -5,7 +5,7 @@ var spawn = require('child_process').spawn;
 module.exports = run;
 
 function run(script) {
-	log.debug('Running script=' + script);
+	log.debug('Running script: ' + script);
 
 	var deferred = q.defer();
 

@@ -41,5 +41,5 @@ var server = app.listen(config('port'), function () {
   var host = server.address().address;
   var port = server.address().port;
 
-  log.info('bpi-webif app listening at http://%s:%s', host, port);
+  log.info('simple-web-admin app listening at http://%s:%s', host, port);
 });
